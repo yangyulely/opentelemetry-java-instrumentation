@@ -15,6 +15,7 @@ import io.opentelemetry.api.trace.TraceFlags;
 import io.opentelemetry.api.trace.TraceState;
 import io.opentelemetry.context.Context;
 import io.opentelemetry.instrumentation.api.instrumenter.OperationListener;
+import io.opentelemetry.instrumentation.api.instrumenter.http.internal.HttpAttributes;
 import io.opentelemetry.instrumentation.api.instrumenter.network.internal.NetworkAttributes;
 import io.opentelemetry.instrumentation.api.instrumenter.url.internal.UrlAttributes;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
@@ -146,7 +147,7 @@ class HttpServerMetricsStableSemconvTest {
                                                     .hasSpanId(spanContext1.getSpanId())))),
             metric ->
                 assertThat(metric)
-                    .hasName("http.server.duration")
+                    .hasName("http.server.request.duration")
                     .hasUnit("s")
                     .hasHistogramSatisfying(
                         histogram ->
@@ -235,7 +236,7 @@ class HttpServerMetricsStableSemconvTest {
                                                     .hasSpanId(spanContext2.getSpanId())))),
             metric ->
                 assertThat(metric)
-                    .hasName("http.server.duration")
+                    .hasName("http.server.request.duration")
                     .hasHistogramSatisfying(
                         histogram ->
                             histogram.hasPointsSatisfying(
@@ -306,7 +307,7 @@ class HttpServerMetricsStableSemconvTest {
         .anySatisfy(
             metric ->
                 assertThat(metric)
-                    .hasName("http.server.duration")
+                    .hasName("http.server.request.duration")
                     .hasUnit("s")
                     .hasHistogramSatisfying(
                         histogram ->
